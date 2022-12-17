@@ -1,0 +1,16 @@
+# IDE
+.vscode/
+.idea/
+
+# binary
+*.exe
+
+# netfilter
+netfilter2.sys
+nfapi.dll
+cgo/include/*.h
+cgo/lib/*.dll
+
+# other
+nft.conf
+
