@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/fs"
 	"os"
 	"os/signal"
@@ -42,11 +43,11 @@ func main() {
 			panic(err)
 		}
 		if fi.IsDir() {
+			fmt.Println("Provided path is a directory, try to get exe files under it")
 			err := filepath.WalkDir(file, func(path string, d fs.DirEntry, err error) error {
 				if !d.IsDir() {
-					if filepath.Ext(file) == "exe" {
-						file = filepath.Base(file)
-						processFiles = append(processFiles, file)
+					if filepath.Ext(d.Name()) == ".exe" {
+						processFiles = append(processFiles, d.Name())
 					}
 				}
 				return nil
@@ -62,6 +63,7 @@ func main() {
 			processFiles = append(processFiles, s)
 		}
 	}
+	fmt.Printf("filter names: %v\n", processFiles)
 	conf := &Conf{
 		WgConf:       wgConf,
 		processNames: processFiles,
